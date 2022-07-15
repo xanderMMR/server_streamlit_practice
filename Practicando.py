@@ -18,22 +18,22 @@ def load_data(nrows):
     return data
 
 
-data_load_state = st.text('Loading data...')
+data_load_state = st.text('Cargando datos...')
 data = load_data(10000)
-data_load_state.text("Done! (using st.cache)")
+data_load_state.text("Hecho! (using st.cache)")
 
-if st.checkbox('Show raw data'):
-    st.subheader('Raw data')
+if st.checkbox('Mostrar datos sin procesar'):
+    st.subheader('Datos sin procesar')
     st.write(data)
 
-st.subheader('Number of pickups by hour')
+st.subheader('Número de recojos por hora')
 hist_values = np.histogram(
     data[DATE_COLUMN].dt.hour, bins=24, range=(0, 24))[0]
 st.bar_chart(hist_values)
 
 # Some number in the range 0-23
-hour_to_filter = st.slider('hour', 0, 23, 17)
+hour_to_filter = st.slider('Hora', 0, 23, 17)
 filtered_data = data[data[DATE_COLUMN].dt.hour == hour_to_filter]
 
-st.subheader('Map of all pickups at %s:00' % hour_to_filter)
+st.subheader('Mapa de todos los recojos a las %s:00 hora(s)' % hour_to_filter)
 st.map(filtered_data)
